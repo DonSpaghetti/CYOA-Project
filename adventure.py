@@ -87,24 +87,46 @@ class Jungle(Scene):
         else:
             print("He misses, screeches, and runs off. What a jerk!")
 
-        print(dedent("""
-            After walking further down the jungle path, you come across an ancient tree surrounded by dozens
+        return 'jungle2'
+
+
+class JungleTwo(Scene):
+
+    def enter(self):
+
+        if 'poo' in status:
+            print(dedent("""
+                After walking further down the jungle path, you come across an ancient tree surrounded by dozens
             of orbiting lights. One of these lights rushes to greet you with a giggle. As it draws near, you
-            notice it's a tiny, glowing fairy. "HUMAN, MY NAME...CHONK. WELCOME BIG TREE LAND!" it bellows
-            ungracefully. "YOU WANT ADVENTURE NOW? HURR HURR, EAT BERRY FROM TREE." You walk up and notice
-            a purple berry hanging delicately from a low branch. Do you eat it?"""))
+            notice it's a tiny, glowing fairy. However, it takes one whiff of you, runs away, and hides. It wants
+            nothing to do with you! You stink of monkey poop.
+            
+            You continue through the forest, finding a river to clean yourself up in.
+            You are no longer covered in poo. Eventually, you find your way out and come to the nearest town."""))
+            status.remove('poo')
 
-        action = input("> ")
+            return 'chicken'
 
-        if action.lower() == 'yes':
-            print(dedent("""You shrink! Tiny human!!!"""))
-            status.append('TINY!')
-            print(f"Your status is {status}.")
-            return 'riddles'
+        else:
 
-        elif action.lower() == 'no':
-            print(dedent("""Chonk laughs and says "TAKE CHANCE WITH MONKEY THEN!" Monkey hits you and you die."""))
-            return 'death'
+            print(dedent("""
+                After walking further down the jungle path, you come across an ancient tree surrounded by dozens
+                of orbiting lights. One of these lights rushes to greet you with a giggle. As it draws near, you
+                notice it's a tiny, glowing fairy. "HUMAN, MY NAME...CHONK. WELCOME BIG TREE LAND!" it bellows
+                ungracefully. "YOU WANT ADVENTURE NOW? HURR HURR, EAT BERRY FROM TREE." You walk up and notice
+                a purple berry hanging delicately from a low branch. Do you eat it?"""))
+
+            action = input("> ")
+
+            if action.lower() == 'yes':
+                print(dedent("""You shrink! Tiny human!!!"""))
+                status.append('TINY!')
+                print(f"Your status is {status}.")
+                return 'riddles'
+
+            elif action.lower() == 'no':
+                print(dedent("""Chonk laughs and says "TAKE CHANCE WITH MONKEY THEN!" Monkey hits you and you die."""))
+                return 'death'
 
 
 class Tree(Scene):
@@ -167,13 +189,67 @@ class DemonChicken(Scene):
             print(dedent("""
                 You lop the demon chicken's head off with your COOL SWORD! Unfortunately, the town turns out to be
                 full of Satanists, and you've killed their mascot. They challenge you to a cooking contest."""))
-            return 'finished'
+            return 'chopped'
         elif action.lower() == 'yes' and 'COOL SWORD' not in inventory:
             print("You fight the chicken bare handed and lose!")
             return 'death'
         elif action.lower() == 'no':
             print("You decide not to fight the demon chicken.")
             return 'finished'
+
+
+class Shokugeki(Scene):
+    def enter(self):
+        print(dedent("""
+            A horrified onlooker screams "THEY'VE KILLED CHARLES!!!" and an alarm is raised. The sheriff arrests you,
+            and informs you that your trial will consist of a cooking contest in the morning. After a cold, damp
+            night in jail, you awake and are led out into the town square, where the local Magistrate stands in front
+            of a bunch of crates and some workstations. A crowd has gathered, and applauds when he unveils the crates
+            with a flourish.
+            
+            "TODAY.....YOU FACE ME IN A COOKING CONTEST...FOR YOUR LIFE! You must use these ingredients to create
+            the perfect breakfast taco! Our town's Sheriff, Doctor, and Banker will preside as judges. There will be
+            30 minutes for each of us to create a taco using the following ingredients:"
+            
+            """))
+
+        ingredient_list = ['tortillas', 'chorizo', 'bell peppers', 'onion', 'eggys', 'chicken', 'chipotle chili sauce',
+                           'lime crema', 'sour cream', 'bacon', 'hot sauce', 'maple syrup', 'lobster', 'cabbage',
+                           'bananas']
+# TODO: Refactor following to account for all correct combinations of components
+
+        print(ingredient_list)
+        print('Please choose your ingredients')
+        action = input("> ")
+        if action.lower() == 'tortillas, chorizo, eggys, lime crema':
+            print('DI MOOOOLTO BENE! THIS IS IT! THE ULTIMATE BREAKFAST TACO!')
+
+            return 'a_prize'
+
+        else:
+            print('The Magistrate makes a way better taco! YOU HAVE BEEN CHOPPED!')
+            return 'death'
+
+
+class Tanks(Scene):
+    def enter(self):
+        print(dedent("""
+            As a prize, the villagers give you....a tank! Yes, that's right. A tank. Do you want to use it 
+            to destroy the Satanists and their town, or drive into the sunset?"""))
+
+        action = input("> ")
+
+        if 'destroy' in action.lower():
+            print("foo")
+            return 'finished'
+
+        elif 'drive' in action.lower():
+            print('bar')
+            return 'finished'
+
+        else:
+            print('please rephrase to include either destroy or drive')
+            return 'a_prize'
 
 
 class Finished(Scene):
@@ -187,11 +263,14 @@ class Map(object):
 
     scenes = {
         'jungle': Jungle(),
+        'jungle2': JungleTwo(),
         'finished': Finished(),
         'redo': Reincarnate(),
         'riddles': Tree(),
         'death': Death(),
-        'chicken':DemonChicken(),
+        'chicken': DemonChicken(),
+        'chopped': Shokugeki(),
+        'a_prize':Tanks(),
         #etc
     }
 
