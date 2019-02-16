@@ -115,15 +115,23 @@ class Tree(Scene):
                     VERY GOOD INDEED! Last riddle - I pass before the sun, yet make no shadow. What am I?"""))
                 action = input("> ")
 
-                if action.lower() == 'wind' or 'the wind':
-                    print("CONGRATULATIONS YOU GET A COOL SWORD!!!")  # Returns with incorrect answer, must fix
+                if action.lower() == 'wind':
+                    print("CONGRATULATIONS YOU GET A COOL SWORD!!!")
+                    inventory.append('COOL SWORD')
+                    print(f"Your inventory is: {inventory}.")
+
+                    return 'chicken'
+
+                elif action.lower() == 'the wind':
+                    print("CONGRATULATIONS YOU GET A COOL SWORD!!!")
                     inventory.append('COOL SWORD')
                     print(f"Your inventory is: {inventory}.")
 
                     return 'chicken'
 
                 else:
-                    print(dedent("""Incorrect! But as Meat Loaf says: 'Two outta three ain't bad' - so the fairies
+                    print(dedent("""
+                        Incorrect! But as Meat Loaf says: 'Two outta three ain't bad' - so the fairies
                         let you live, and you escape the jungle alive, but empty handed. Eventually, you arrive in 
                         a small but friendly town. Perhaps too friendly..."""))
                     return 'chicken'
