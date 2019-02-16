@@ -18,16 +18,18 @@ from random import randint
 from textwrap import dedent
 
 status = []
-inventory = []
-
+inventory = ['hopes and dreams']
+bar = 'XXXXX'
 # Work out health bar to fight demon chicken
 # Possibly health = [X|X|X|X|X] and .pop / .append for 'X' in list?
 
 
 class Scene(object):
     def enter(self):
-        print("This scene is not yet configured.")
-        print("Subclass it and implement enter().")
+        print("This is a class that establishes the framework for our scenes.")
+        print("We'll use it to ENTER scenes by calling this method.")
+        print("Then, the engine will bring up the scene we want, according to the map!")
+        print("At least, I think that's how it works.")
         exit(1)
 
 
@@ -60,20 +62,27 @@ class Reincarnate(Scene):
             again, but only once. If you die again, he can't be bothered with you."""))
         status.append('reincarnated')
         print(f"Your status is {status}.")
+        status.pop(0)
+        print(f"Your health is {bar}.")
+        print(f"Your inventory is {inventory}.")
         return 'jungle'
 
 
 class Jungle(Scene):
     def enter(self):
         print(dedent("""
-            ...The wall falls away, brick by brick, to reveal a rough dirt path through a lush forest. 
-            You hear faint, girlish laughter in the distance. As you step through and walk along the path,
+            ...The mist parts in front of you to reveal a rough dirt path through a lush forest. 
+            You hear faint, girlish laughter in the distance. As you step into this new world and walk along the path,
             a monkey flings poo at your head.
             """))
         if randint(1, 20) >= 12:
             print(dedent("""He hits! You are covered in poo. Gross!"""))
             status.append('poo')
             print(f"Your status is {status}.")
+            health = bar[:-1]
+            print(f"Your health is {health}.")
+            inventory.remove('hopes and dreams')
+            print(f'You have lost your hopes and dreams. Your inventory is {inventory}.')
 
         else:
             print("He misses, screeches, and runs off. What a jerk!")
