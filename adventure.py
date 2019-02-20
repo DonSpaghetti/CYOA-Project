@@ -20,8 +20,6 @@ from textwrap import dedent
 status = []
 inventory = ['hopes and dreams']
 bar = 'XXXXX'
-# Work out health bar to fight demon chicken
-# Possibly health = [X|X|X|X|X] and .pop / .append for 'X' in list?
 
 
 class Scene(object):
@@ -58,8 +56,12 @@ class Reincarnate(Scene):
     def enter(self):
         print(dedent("""
             You led a boring life! One day, you were killed by a falling coconut. It wasn't even organic.
-            Damn GMO coconuts! You wake up in a dark, mist-filled chamber. God tells you you're pathetic and to try
-            again, but only once. If you die again, he can't be bothered with you."""))
+            Damn GMO coconuts! You wake up in a dark, mist-filled chamber. 
+            
+            
+            God tells you you're pathetic and to try again, but only once. 
+            If you die again, he can't be bothered with you."""))
+
         status.append('reincarnated')
         print(f"Your status is {status}.")
         status.pop(0)
@@ -101,6 +103,7 @@ class JungleTwo(Scene):
             notice it's a tiny, glowing fairy. However, it takes one whiff of you, runs away, and hides. It wants
             nothing to do with you! You stink of monkey poop.
             
+            
             You continue through the forest, finding a river to clean yourself up in.
             You are no longer covered in poo. Eventually, you find your way out and come to the nearest town."""))
             status.remove('poo')
@@ -111,10 +114,13 @@ class JungleTwo(Scene):
 
             print(dedent("""
                 After walking further down the jungle path, you come across an ancient tree surrounded by dozens
-                of orbiting lights. One of these lights rushes to greet you with a giggle. As it draws near, you
-                notice it's a tiny, glowing fairy. "HUMAN, MY NAME...CHONK. WELCOME BIG TREE LAND!" it bellows
-                ungracefully. "YOU WANT ADVENTURE NOW? HURR HURR, EAT BERRY FROM TREE." You walk up and notice
-                a purple berry hanging delicately from a low branch. Do you eat it?"""))
+                of orbiting lights. One of these lights rushes to greet you with a giggle. 
+                
+                
+                As it draws near, you notice it's a tiny, glowing fairy. 
+                "HUMAN, MY NAME...STEVE. WELCOME BIG TREE LAND!" it bellows ungracefully. "YOU WANT ADVENTURE NOW? 
+                HURR HURR, EAT BERRY FROM TREE." You walk up and notice a purple berry hanging delicately from 
+                a low branch. Do you eat it?"""))
 
             action = input("> ")
 
@@ -157,6 +163,7 @@ class Tree(Scene):
                     print("CONGRATULATIONS YOU GET A COOL SWORD!!!")
                     inventory.append('COOL SWORD')
                     print(f"Your inventory is: {inventory}.")
+                    status.remove('TINY!')
 
                     return 'chicken'
 
@@ -165,6 +172,7 @@ class Tree(Scene):
                         Incorrect! But as Meat Loaf says: 'Two outta three ain't bad' - so the fairies
                         let you live, and you escape the jungle alive, but empty handed. Eventually, you arrive in 
                         a small but friendly town. Perhaps too friendly..."""))
+                    status.remove('TINY!')
                     return 'chicken'
 
             else:
@@ -188,7 +196,7 @@ class DemonChicken(Scene):
         if action.lower() == 'yes' and 'COOL SWORD' in inventory:
             print(dedent("""
                 You lop the demon chicken's head off with your COOL SWORD! Unfortunately, the town turns out to be
-                full of Satanists, and you've killed their mascot. They challenge you to a cooking contest."""))
+                full of evil cultists, and you've killed their mascot. They challenge you to a cooking contest."""))
             return 'chopped'
         elif action.lower() == 'yes' and 'COOL SWORD' not in inventory:
             print("You fight the chicken bare handed and lose!")
@@ -242,16 +250,28 @@ class Tanks(Scene):
     def enter(self):
         print(dedent("""
             As a prize, the villagers give you....a tank! Yes, that's right. A tank. Do you want to use it 
-            to destroy the Satanists and their town, or drive into the sunset?"""))
+            to destroy the evil cultists and their town, or drive into the sunset?"""))
 
         action = input("> ")
 
         if 'destroy' in action.lower():
-            print("foo")
+            print(dedent("""
+                You fire up the tank's engine with a deep rumble and gas it, crushing the nearest house
+                in a roar of splinters. Only rubble is left. You rotate the turret towards the Magistrate's house.
+                'THIS IS WHAT LOSERS GET! DON'T YOU UNDERSTAND THAT CHORIZO IS THE ULTIMATE BREAKFAST TACO ADDITION?!' 
+                you yell, and fire the cannon with a BOOOOOM! His house explodes into a million pieces. 
+                
+                Flooring the gas again, you crush a statue, five market stalls, and an outhouse on your way out.
+                You can sleep well tonight, knowing that justice has been done this day."""))
+
             return 'finished'
 
         elif 'drive' in action.lower():
-            print('bar')
+            print(dedent("""
+                Despite being in command of a 50 ton behemoth, you don't let the power go to your head. Without 
+                resorting to violence, you make your way out of town, riding into the distance, underneath a blazing
+                red sky. Until the next adventure!"""))
+
             return 'finished'
 
         else:
