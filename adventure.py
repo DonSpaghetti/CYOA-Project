@@ -203,7 +203,11 @@ class DemonChicken(Scene):
             return 'death'
         elif action.lower() == 'no':
             print("You decide not to fight the demon chicken.")
-            return 'finished'
+            return 'pub'
+
+        else:
+            print("Please answer yes or no.")
+            return 'chicken'
 
 
 class Shokugeki(Scene):
@@ -244,6 +248,55 @@ class Shokugeki(Scene):
             print('The Magistrate makes a way better taco! YOU HAVE BEEN CHOPPED!')
 
             return 'death'
+
+
+class Pub(Scene):
+
+    def enter(self):
+        print(dedent("""
+            You wisely decide not to fight the demon chicken. Instead, you valiantly retreat to the nearest pub, aptly
+            named 'The Wingchester'. And hey, EVERY NIGHT is 50 cent wing night here! Nice.
+            
+            Can't be fighting demons, that'll make you late for dinner!
+            
+            Unfortunately, it seems that the demon chicken has a hobby....and that hobby is RAISING ZOMBIES.
+            
+            
+            You're halfway through your 15th wing when a loud BLAM! hits the pub's front door. It's only a matter
+            of time until the zombies make their way in...what would you like to do?! (You can FIGHT, RUN, HIDE, or 
+            CONTINUE EATING)"""))
+        action = input("> ")
+
+        if action.lower() == 'fight' and 'COOL SWORD' in inventory:
+            print("There are " + str(randint(2, 10)) + " zombies!")
+            return 'pub2'
+
+        elif action.lower() == 'fight':
+            print("There are " + str(randint(2, 10)) + " zombies! But you don't have a sword!")
+            return 'pub2'
+        elif action.lower() == 'run':
+            print("You run! A master of the 'tactical retreat', I see.")
+            return 'finished'
+
+        elif action.lower() == 'hide':
+            print("You hide in the bathroom. Seriously? What kind of hero are you!?")
+            return 'pub2'
+        else:
+            print("please choose to FIGHT, RUN, HIDE, or CONTINUE EATING.")
+            return 'pub'
+
+
+class PubTwo(Scene):
+
+    def enter(self):
+        print(dedent("""
+            We've passed the point where we needed to stop.
+            
+            
+            But, let's keep going and see what happens.
+            """))
+
+        return 'finished'
 
 
 class Tanks(Scene):
@@ -297,7 +350,9 @@ class Map(object):
         'death': Death(),
         'chicken': DemonChicken(),
         'chopped': Shokugeki(),
-        'a_prize':Tanks(),
+        'a_prize': Tanks(),
+        'pub': Pub(),
+        'pub2': PubTwo(),
         #etc
     }
 
