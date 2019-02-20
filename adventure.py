@@ -216,18 +216,25 @@ class Shokugeki(Scene):
         ingredient_list = ['tortillas', 'chorizo', 'bell peppers', 'onion', 'eggys', 'chicken', 'chipotle chili sauce',
                            'lime crema', 'sour cream', 'bacon', 'hot sauce', 'maple syrup', 'lobster', 'cabbage',
                            'bananas']
-# TODO: Refactor following to account for all correct combinations of components
+
+# INGREDIENT SELECTION NOW WORKS, SHOUTOUT TO LIST COMPREHENSION FOR BEING GREAT
 
         print(ingredient_list)
-        print('Please choose your ingredients')
+        print("Please choose your ingredients.")
         action = input("> ")
-        if action.lower() == 'tortillas, chorizo, eggys, lime crema':
+        ingredient_selection = action.split(",")
+
+        if [x for x in ingredient_list if any(x in item for item in ingredient_selection)] == \
+                ['tortillas', 'chorizo', 'eggys']:
+
             print('DI MOOOOLTO BENE! THIS IS IT! THE ULTIMATE BREAKFAST TACO!')
 
             return 'a_prize'
 
         else:
+
             print('The Magistrate makes a way better taco! YOU HAVE BEEN CHOPPED!')
+
             return 'death'
 
 
