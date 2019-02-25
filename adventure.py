@@ -268,18 +268,30 @@ class Pub(Scene):
         action = input("> ")
 
         if action.lower() == 'fight' and 'COOL SWORD' in inventory:
-            print("There are " + str(randint(2, 10)) + " zombies!")
-            return 'pub2'
+            print(dedent("""
+                There are""" + str(randint(2,10)) + """zombies! Fortunately, you're able to kill them with the 
+                COOL SWORD in your inventory. The bystanders are so grateful, they offer you free beer for life! 
+                Nice!"""))
+            return 'finished'
 
         elif action.lower() == 'fight':
-            print("There are " + str(randint(2, 10)) + " zombies! But you don't have a sword!")
-            return 'pub2'
+            print(dedent("""There are """ + str(randint(2, 10)) + """zombies! But you don't have a sword! You manage to 
+            stab one in the head before being overwhelmed! They devour you - looks like it's 50 cent HUMAN night at 
+            THIS BAR!"""))
+            return 'death'
         elif action.lower() == 'run':
-            print("You run! A master of the 'tactical retreat', I see.")
-            return 'finished'
+            print("You run! A master of the 'tactical retreat', I see. Unfortunately, in your haste, you slip and fall.")
+            return 'death'
 
         elif action.lower() == 'hide':
             print("You hide in the bathroom. Seriously? What kind of hero are you!?")
+            return 'pub2'
+
+        elif action.lower() == 'continue eating':
+            print(dedent("""
+                You're not gonna let some silly zombies distract you from dinner. You munch on another delicious wing
+                as the zombies force their way in, tearing through the door first, and then several patrons. You 
+                lick wing sauce from your fingers in complete apathy. I guess nihilism is a hell of a drug."""))
             return 'pub2'
         else:
             print("please choose to FIGHT, RUN, HIDE, or CONTINUE EATING.")
@@ -290,10 +302,8 @@ class PubTwo(Scene):
 
     def enter(self):
         print(dedent("""
-            We've passed the point where we needed to stop.
-            
-            
-            But, let's keep going and see what happens.
+            The bartender takes a beautiful antique rifle off the wall behind the bar and works the lever action.
+            With careful aim, he shoots the zombies in the head before they're able to wipe out the entire bar.
             """))
 
         return 'finished'
