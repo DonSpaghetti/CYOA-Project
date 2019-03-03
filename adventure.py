@@ -19,7 +19,7 @@ from textwrap import dedent
 
 status = []
 inventory = ['hopes and dreams']
-bar = 'XXXXX'
+bar = '|X X X X X|'
 
 
 class Scene(object):
@@ -48,7 +48,7 @@ class Engine(object):
 
 class Death(Scene):
     def enter(self):
-        print("You die! God doesn't care this time. Yare yare daze.")
+        print("You die! There is nothing but the void to greet you this time.")
         exit(1)
 
 
@@ -59,8 +59,8 @@ class Reincarnate(Scene):
             Damn GMO coconuts! You wake up in a dark, mist-filled chamber. 
             
             
-            God tells you you're pathetic and to try again, but only once. 
-            If you die again, he can't be bothered with you."""))
+            A deity appears before you, and says you get one more chance - just one. 
+            If you die again, it can't be bothered with you."""))
 
         status.append('reincarnated')
         print(f"Your status is {status}.")
@@ -73,7 +73,7 @@ class Reincarnate(Scene):
 class Jungle(Scene):
     def enter(self):
         print(dedent("""
-            ...The mist parts in front of you to reveal a rough dirt path through a lush forest. 
+            ...The mist parts in front of you to reveal a rough dirt path through a lush jungle. 
             You hear faint, girlish laughter in the distance. As you step into this new world and walk along the path,
             a monkey flings poo at your head.
             """))
@@ -81,7 +81,7 @@ class Jungle(Scene):
             print(dedent("""He hits! You are covered in poo. Gross!"""))
             status.append('poo')
             print(f"Your status is {status}.")
-            health = bar[:-1]
+            health = bar[0:8]+'  |'
             print(f"Your health is {health}.")
             inventory.remove('hopes and dreams')
             print(f'You have lost your hopes and dreams. Your inventory is {inventory}.')
@@ -131,8 +131,52 @@ class JungleTwo(Scene):
                 return 'riddles'
 
             elif action.lower() == 'no':
-                print(dedent("""Chonk laughs and says "TAKE CHANCE WITH MONKEY THEN!" Monkey hits you and you die."""))
-                return 'death'
+                print(dedent("""Steve laughs and says "TAKE CHANCE WITH MONKEY THEN!" You are shown back to the path. 
+                    """))
+
+                return 'jungle3'
+
+
+class JungleThree(Scene):
+    def enter(self):
+        if randint(1, 10) <= 8:
+
+            print(dedent("""You find a banana tree. Pick bananas?"""))
+
+            action = input("> ")
+            if action.lower() == 'yes':
+                print(dedent("""Okay! How many? The tree is full of bananas, but you figure you can only carry up to 5.
+                Maybe 6, if you're adventurous. ( ͡° ͜ʖ ͡°)."""))
+                action = input("> ")
+                if action.lower() <= '5':
+                    print("You pick "+ action + "bananas!")
+                    inventory.append(action + 'bananas')
+                    print(f"Your inventory is {inventory}.")
+
+                    return 'finished'
+
+                elif action.lower() == '6':
+                    print(dedent("""You pick 5 bananas, and store them in your pockets. The sixth banana, you manage
+                    to stuff down the front of your pants, like a pistol. Banana Gunslinger! Where did you think
+                    it was gonna go!?"""))
+                    inventory.append('5 bananas' + 'Gun-nana')
+                    print(f"Your inventory is {inventory}.")
+
+                    return 'finished'
+
+                elif action.lower() >= '5':
+                    print("You picked too many bananas! Some drop to the floor, because you can only carry 5.")
+                    inventory.append('5 bananas')
+                    print(f"Your inventory is {inventory}.")
+
+                    return 'finished'
+
+                else:
+                    print("Please enter a number!")
+                    return 'jungle3'
+        else:
+            print("Monkey returns with a vengeance. He hits you with a rock this time, and you die.")
+            return 'death'
 
 
 class Tree(Scene):
@@ -176,11 +220,11 @@ class Tree(Scene):
                     return 'chicken'
 
             else:
-                print("Incorrect! The fairies devour you. Chonk have full belly this day! Hurr.")
+                print("Incorrect! The fairies devour you. Steve have full belly this day! Hurr.")
                 return 'death'
 
         else:
-            print("Incorrect! The fairies devour you. Chonk have full belly this day! Hurr.")
+            print("Incorrect! The fairies devour you. Steve have full belly this day! Hurr.")
             return 'death'
 
 # NEEDS WORK BELOW
@@ -363,6 +407,7 @@ class Map(object):
         'a_prize': Tanks(),
         'pub': Pub(),
         'pub2': PubTwo(),
+        'jungle3': JungleThree(),
         #etc
     }
 
