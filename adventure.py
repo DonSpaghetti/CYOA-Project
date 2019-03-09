@@ -132,7 +132,7 @@ class JungleTwo(Scene):
 
             elif action.lower() == 'no':
                 print(dedent("""Steve laughs and says "TAKE CHANCE WITH MONKEY THEN!" You are shown back to the path. 
-                    """))
+                """))
 
                 return 'jungle3'
 
@@ -149,11 +149,11 @@ class JungleThree(Scene):
                 Maybe 6, if you're adventurous. ( ͡° ͜ʖ ͡°)."""))
                 action = input("> ")
                 if action.lower() <= '5':
-                    print("You pick "+ action + "bananas!")
+                    print("You pick " + action + " bananas!")
                     inventory.append(action + 'bananas')
                     print(f"Your inventory is {inventory}.")
 
-                    return 'finished'
+                    return 'junglefinal'
 
                 elif action.lower() == '6':
                     print(dedent("""You pick 5 bananas, and store them in your pockets. The sixth banana, you manage
@@ -162,21 +162,70 @@ class JungleThree(Scene):
                     inventory.append('5 bananas' + 'Gun-nana')
                     print(f"Your inventory is {inventory}.")
 
-                    return 'finished'
+                    return 'junglefinal'
 
-                elif action.lower() >= '5':
+                elif action.lower() > '5':
                     print("You picked too many bananas! Some drop to the floor, because you can only carry 5.")
                     inventory.append('5 bananas')
                     print(f"Your inventory is {inventory}.")
 
-                    return 'finished'
+                    return 'junglefinal'
 
                 else:
                     print("Please enter a number!")
                     return 'jungle3'
-        else:
-            print("Monkey returns with a vengeance. He hits you with a rock this time, and you die.")
+
+            elif action.lower() == 'no':
+                print("You continue through the jungle, not picking any bananas.")
+                return 'junglefinal'
+
+            else:
+                print("Please choose yes or no!")
+
+                return 'jungle3'
+
+
+# TODO fix banana system below
+
+
+class JungleFinal(Scene):
+    def enter(self):
+        print(dedent("""
+            The monkey waits for you near the end of the jungle. He holds a rock menacingly. What would you like to do?
+            You can try to FIGHT, PERSUADE, or ATTEMPT A BRIBE."""))
+
+        action = input("> ")
+
+        if action.lower() == 'fight':
+
+            print("You fight!")
+
+            return 'chicken'
+
+        elif action.lower() == 'persuade':
+
+            print("You persuade!")
+
+            return 'chicken'
+
+        elif 'bribe' in action.lower() and 'bananas' in inventory:
+
+            print("You bribe with a banana")
+
+            return 'chicken'
+
+        elif 'bribe' in action.lower() and 'bananas' not in inventory:
+
+            print(dedent("""You have nothing to bribe with! Monkey throws the rock at you while you rummage in
+            your pockets."""))
+
             return 'death'
+
+        else:
+
+            print("Please choose to FIGHT, PERSUADE, or ATTEMPT A BRIBE.")
+
+            return 'junglefinal'
 
 
 class Tree(Scene):
@@ -408,6 +457,7 @@ class Map(object):
         'pub': Pub(),
         'pub2': PubTwo(),
         'jungle3': JungleThree(),
+        'junglefinal': JungleFinal(),
         #etc
     }
 
