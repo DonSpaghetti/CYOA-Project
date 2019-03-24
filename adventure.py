@@ -150,15 +150,17 @@ class JungleThree(Scene):
                 action = input("> ")
                 if action.lower() <= '5':
                     print("You pick " + action + " bananas!")
-                    inventory.append(action + 'bananas')
+                    inventory.append(action + ' bananas')
                     print(f"Your inventory is {inventory}.")
 
                     return 'junglefinal'
 
                 elif action.lower() == '6':
-                    print(dedent("""You pick 5 bananas, and store them in your pockets. The sixth banana, you manage
-                    to stuff down the front of your pants, like a pistol. Banana Gunslinger! Where did you think
-                    it was gonna go!?"""))
+                    print(dedent("""You pick 5 bananas, and store them in your pockets. 
+                    
+                        The sixth banana, you manage
+                        to stuff down the front of your pants, like a pistol. Banana Gunslinger! Where did you think
+                        it was gonna go!?"""))
                     inventory.append('5 bananas' + 'Gun-nana')
                     print(f"Your inventory is {inventory}.")
 
@@ -198,28 +200,28 @@ class JungleFinal(Scene):
 
         if action.lower() == 'fight':
 
-            print("You fight!")
+            print("You fight! He gets in a few hits, but eventually routs after you deliver a right hook.")
+            health = bar[0:8] + '  |'
+            print(f"Your health is {health}")
 
             return 'chicken'
 
         elif action.lower() == 'persuade':
 
-            print("You persuade!")
-
-            return 'chicken'
-
-        elif 'bribe' in action.lower() and 'bananas' in inventory:
-
-            print("You bribe with a banana")
-
-            return 'chicken'
-
-        elif 'bribe' in action.lower() and 'bananas' not in inventory:
-
-            print(dedent("""You have nothing to bribe with! Monkey throws the rock at you while you rummage in
-            your pockets."""))
+            print("You attempt to reason with the monkey. He doesn't understand, and hits you with the rock.")
 
             return 'death'
+
+        elif action.lower() == 'attempt a bribe':
+            if '1 bananas' or '2 bananas' or '3 bananas' or '4 bananas' or '5 bananas' in inventory:
+                print("You bribe it with your bananas, and are able to pass!")
+
+                return 'chicken'
+            else:
+                print(dedent("""You have nothing to bribe with! Monkey throws the rock at you while you rummage in
+            your pockets."""))
+
+                return 'death'
 
         else:
 
@@ -276,7 +278,7 @@ class Tree(Scene):
             print("Incorrect! The fairies devour you. Steve have full belly this day! Hurr.")
             return 'death'
 
-# NEEDS WORK BELOW
+# NEEDS WORK BELOW TO INCORPORATE COMBAT SYSTEM
 
 
 class DemonChicken(Scene):
