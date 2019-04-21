@@ -5,7 +5,7 @@
 # Scene
 #     Death
 #     Scene 0: That Time I Got Reincarnated as a Self-Aware Trope
-#     Scene 1: The Jungle and The Poop Monkey
+#     Scene 1: The Jungle
 #     Scene 2: Answer Some Riddles and Get a COOL SWORD!
 #     Scene 3: The Demon Chicken
 #     Scene 4: Shokugeki at High Noon (or, The Perfect Breakfast Taco)
@@ -60,7 +60,8 @@ class Reincarnate(Scene):
             
             
             A deity appears before you, and says you get one more chance - just one. 
-            If you die again, it can't be bothered with you."""))
+            If you die again, it can't be bothered with you. You're pretty sure this is the same premise
+            as a light novel you've read, but whatever! It's hard to have emotions as a disembodied spirit."""))
 
         status.append('reincarnated')
         print(f"Your status is {status}.")
@@ -139,43 +140,27 @@ class JungleTwo(Scene):
 
 class JungleThree(Scene):
     def enter(self):
-        if randint(1, 10) <= 8:
 
             print(dedent("""You find a banana tree. Pick bananas?"""))
 
             action = input("> ")
             if action.lower() == 'yes':
                 print(dedent("""Okay! How many? The tree is full of bananas, but you figure you can only carry up to 5.
-                Maybe 6, if you're adventurous. ( ͡° ͜ʖ ͡°)."""))
+                    (Also, please input as a number.)"""))
                 action = input("> ")
-                if action.lower() <= '5':
-                    print("You pick " + action + " bananas!")
-                    inventory.append(action + ' bananas')
+                if action <= '5':
+                    print("You pick " + str(action) + " bananas!")
+                    inventory.append(str(action) + ' bananas')
                     print(f"Your inventory is {inventory}.")
 
                     return 'junglefinal'
 
-                elif action.lower() == '6':
-                    print(dedent("""You pick 5 bananas, and store them in your pockets. 
-                    
-                        The sixth banana, you manage
-                        to stuff down the front of your pants, like a pistol. Banana Gunslinger! Where did you think
-                        it was gonna go!?"""))
-                    inventory.append('5 bananas' + 'Gun-nana')
-                    print(f"Your inventory is {inventory}.")
-
-                    return 'junglefinal'
-
-                elif action.lower() > '5':
+                elif action > '5':
                     print("You picked too many bananas! Some drop to the floor, because you can only carry 5.")
                     inventory.append('5 bananas')
                     print(f"Your inventory is {inventory}.")
 
                     return 'junglefinal'
-
-                else:
-                    print("Please enter a number!")
-                    return 'jungle3'
 
             elif action.lower() == 'no':
                 print("You continue through the jungle, not picking any bananas.")
@@ -187,7 +172,7 @@ class JungleThree(Scene):
                 return 'jungle3'
 
 
-# TODO fix banana system below
+# TODO fix banana input to allow words such as two, three, etc.
 
 
 class JungleFinal(Scene):
@@ -200,9 +185,12 @@ class JungleFinal(Scene):
 
         if action.lower() == 'fight':
 
-            print("You fight! He gets in a few hits, but eventually routs after you deliver a right hook.")
+            print(dedent("""You fight! He gets in a few hits, but eventually routs after you deliver a right hook."""))
             health = bar[0:8] + '  |'
             print(f"Your health is {health}")
+            print(dedent("""With the monkey gone, you manage to make it out of the jungle, and wander until you
+            reach a quaint little town. The area is awash with flowers, and there's a sign at the front that says 
+            "Voted Best Village for the past five years!" """))
 
             return 'chicken'
 
@@ -307,6 +295,10 @@ class DemonChicken(Scene):
 
 class Shokugeki(Scene):
     def enter(self):
+        ingredient_list = ['tortillas', 'chorizo', 'bell peppers', 'onion', 'eggs', 'chicken', 'chipotle chili sauce',
+                           'lime crema', 'sour cream', 'bacon', 'hot sauce', 'maple syrup', 'lobster', 'cabbage',
+                           'bananas']
+
         print(dedent("""
             A horrified onlooker screams "THEY'VE KILLED CHARLES!!!" and an alarm is raised. The sheriff arrests you,
             and informs you that your trial will consist of a cooking contest in the morning. After a cold, damp
@@ -320,19 +312,13 @@ class Shokugeki(Scene):
             
             """))
 
-        ingredient_list = ['tortillas', 'chorizo', 'bell peppers', 'onion', 'eggys', 'chicken', 'chipotle chili sauce',
-                           'lime crema', 'sour cream', 'bacon', 'hot sauce', 'maple syrup', 'lobster', 'cabbage',
-                           'bananas']
-
-# INGREDIENT SELECTION NOW WORKS, SHOUTOUT TO LIST COMPREHENSION FOR BEING GREAT
-
         print(ingredient_list)
         print("Please choose your ingredients.")
         action = input("> ")
         ingredient_selection = action.split(",")
 
         if [x for x in ingredient_list if any(x in item for item in ingredient_selection)] == \
-                ['tortillas', 'chorizo', 'eggys']:
+                ['tortillas', 'chorizo', 'eggs']:
 
             print('DI MOOOOLTO BENE! THIS IS IT! THE ULTIMATE BREAKFAST TACO!')
 
