@@ -236,17 +236,24 @@ class Tree(Scene):
                 action = input("> ")
 
                 if action.lower() == 'wind':
-                    print("CONGRATULATIONS YOU GET A COOL SWORD!!!")
+                    print(dedent("""CONGRATULATIONS YOU GET A COOL SWORD!!! You make it out of the tree, return
+                    to your normal size, and escape the jungle, only to find a nearby town. It's small, but friendly. 
+                    Perhaps too friendly.."""))
                     inventory.append('COOL SWORD')
+                    status.remove('TINY!')
                     print(f"Your inventory is: {inventory}.")
+                    print(f"Your status is: {status}.")
 
                     return 'chicken'
 
                 elif action.lower() == 'the wind':
-                    print("CONGRATULATIONS YOU GET A COOL SWORD!!!")
+                    print(dedent("""CONGRATULATIONS YOU GET A COOL SWORD!!! You make it out of the tree, return
+                    to your normal size, and escape the jungle, only to find a nearby town. It's small, but friendly. 
+                    Perhaps too friendly.."""))
                     inventory.append('COOL SWORD')
-                    print(f"Your inventory is: {inventory}.")
                     status.remove('TINY!')
+                    print(f"Your inventory is: {inventory}.")
+                    print(f"Your status is: {status}.")
 
                     return 'chicken'
 
